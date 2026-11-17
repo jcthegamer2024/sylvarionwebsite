@@ -115,15 +115,23 @@ if (staffProfile?.showModal) {
   const profileRole = staffProfile.querySelector('.profile-role');
   const profileDetails = staffProfile.querySelector('.profile-details');
   const profileHeading = staffProfile.querySelector('.profile-heading');
-  const profileBanner = staffProfile.querySelector('.profile-banner');
-
-  profileBanner.addEventListener('error', () => { profileBanner.hidden = true; });
+  let activeBanner;
 
   document.querySelectorAll('.roster > li > template[data-staff-profile]').forEach((template) => {
     const card = template.parentElement;
     const name = card.querySelector('strong');
     const avatar = card.querySelector('.avatar');
     const role = card.querySelector('.role');
+    let banner;
+    if (template.dataset.banner) {
+      banner = new Image();
+      banner.className = 'profile-banner';
+      banner.alt = '';
+      banner.hidden = true;
+      banner.addEventListener('load', () => { banner.hidden = false; }, { once: true });
+      banner.src = template.dataset.banner;
+    }
+
     const trigger = document.createElement('button');
     trigger.type = 'button';
     trigger.className = 'profile-trigger';
@@ -132,14 +140,10 @@ if (staffProfile?.showModal) {
     card.append(trigger);
 
     trigger.addEventListener('click', () => {
-      const banner = template.dataset.banner;
       profileHeading.dataset.role = role.dataset.role;
-      profileBanner.hidden = !banner;
-      if (banner) {
-        profileBanner.src = banner;
-      } else {
-        profileBanner.removeAttribute('src');
-      }
+      activeBanner?.remove();
+      if (banner) profileHeading.prepend(banner);
+      activeBanner = banner;
       profileName.replaceChildren(...name.cloneNode(true).childNodes);
       const portrait = avatar.cloneNode();
       portrait.loading = 'eager';
