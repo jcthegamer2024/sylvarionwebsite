@@ -275,6 +275,10 @@ nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .roster li:hover {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+    background-color: color-mix(in srgb, var(--accent) 5%, var(--panel));
+  }
   .site-header[data-scroll-state="idle"] .header-inner:hover {
     transform: none;
     opacity: 1;
@@ -290,6 +294,7 @@ nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .roster li { transition: border-color .16s ease, background-color .16s ease; }
   .header-inner { transition: transform .22s ease, opacity .2s ease, background-color .2s ease; }
   :is(.button, .copy-address, .theme-toggle, .menu-toggle, .header-discord, .socials a, nav a) {
     transition: transform .16s ease-out, background-color .16s ease, border-color .16s ease, color .16s ease;
