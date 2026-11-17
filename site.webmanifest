@@ -1,0 +1,14 @@
+{
+  "name": "Sylvarion",
+  "short_name": "Sylvarion",
+  "icons": [
+    {
+      "src": "/img/brand.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#10141d",
+  "theme_color": "#10141d"
+}
