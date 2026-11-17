@@ -252,9 +252,10 @@ nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0;
 }
 .staff-profile::backdrop { background: #080c16aa; }
 body:has(.staff-profile[open]) { overflow: hidden; }
-.staff-profile-content { position: relative; padding: clamp(18px, 5vw, 28px); }
+.staff-profile-content { --profile-padding: clamp(18px, 5vw, 28px); position: relative; }
 .profile-close {
   position: absolute;
+  z-index: 1;
   inset-block-start: 12px;
   inset-inline-end: 12px;
   display: grid;
@@ -263,30 +264,53 @@ body:has(.staff-profile[open]) { overflow: hidden; }
   height: 40px;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: transparent;
+  background: var(--panel);
   color: var(--muted);
   font-size: 1.4rem;
   cursor: pointer;
 }
 .profile-close:hover { color: var(--accent); border-color: var(--accent); }
-.profile-heading { display: flex; align-items: center; gap: 14px; padding-inline-end: 42px; }
+.profile-heading {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: var(--profile-padding);
+  padding-inline-end: max(54px, var(--profile-padding));
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--role-color, var(--accent)) 22%, var(--panel)), var(--panel));
+}
+.profile-banner:not([hidden]) {
+  display: block;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(to bottom, #0009, #0005 45%, transparent);
+}
+.profile-heading:has(.profile-banner:not([hidden])) {
+  background: var(--panel);
+}
+.profile-heading > :last-child { min-width: 0; }
 .profile-heading h2 { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; margin: 0 0 4px; font-size: clamp(1rem, 4vw, 1.4rem); }
 .profile-avatar { flex: 0 0 clamp(72px, 19vw, 96px); }
 .profile-avatar img { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; border: 1px solid var(--line); border-radius: 6px; background: var(--avatar); }
-.profile-details:not(:empty) { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); }
+.profile-details:not(:empty) { padding: 0 var(--profile-padding) var(--profile-padding); color: var(--muted); }
 .profile-details > :last-child { margin-bottom: 0; }
 .profile-links { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
 .profile-links a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; color: var(--accent); text-decoration: none; }
 .profile-links svg { flex: none; }
 .profile-links a:hover { border-color: var(--accent); }
 /* Match the original role hues, with text shades chosen for each theme. */
-.role[data-role="admin"] { --role-color: light-dark(#e80000, #ff3b3b); }
-.role[data-role="manager"] { --role-color: light-dark(#9900ff, #bc57ff); }
-.role[data-role="moderator"] { --role-color: light-dark(#047f7f, #06d1d1); }
-.role[data-role="helper"] { --role-color: light-dark(#a940d9, #c553f9); }
-.role[data-role="developer"] { --role-color: light-dark(#068177, #0be3d1); }
-.role[data-role="architect"] { --role-color: light-dark(#1d8348, #2ecc71); }
-.role[data-role="builder"] { --role-color: light-dark(#777700, #f2f200); }
+[data-role="admin"] { --role-color: light-dark(#e80000, #ff3b3b); }
+[data-role="manager"] { --role-color: light-dark(#9900ff, #bc57ff); }
+[data-role="moderator"] { --role-color: light-dark(#047f7f, #06d1d1); }
+[data-role="helper"] { --role-color: light-dark(#a940d9, #c553f9); }
+[data-role="developer"] { --role-color: light-dark(#068177, #0be3d1); }
+[data-role="architect"] { --role-color: light-dark(#1d8348, #2ecc71); }
+[data-role="builder"] { --role-color: light-dark(#777700, #f2f200); }
 @media (max-width: 940px) {
   body { --header-height: 76px; }
   .site-header .header-inner:has(.menu-toggle[aria-expanded="true"]) {

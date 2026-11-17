@@ -114,6 +114,10 @@ if (staffProfile?.showModal) {
   const profileAvatar = staffProfile.querySelector('.profile-avatar');
   const profileRole = staffProfile.querySelector('.profile-role');
   const profileDetails = staffProfile.querySelector('.profile-details');
+  const profileHeading = staffProfile.querySelector('.profile-heading');
+  const profileBanner = staffProfile.querySelector('.profile-banner');
+
+  profileBanner.addEventListener('error', () => { profileBanner.hidden = true; });
 
   document.querySelectorAll('.roster > li > template[data-staff-profile]').forEach((template) => {
     const card = template.parentElement;
@@ -128,6 +132,14 @@ if (staffProfile?.showModal) {
     card.append(trigger);
 
     trigger.addEventListener('click', () => {
+      const banner = template.dataset.banner;
+      profileHeading.dataset.role = role.dataset.role;
+      profileBanner.hidden = !banner;
+      if (banner) {
+        profileBanner.src = banner;
+      } else {
+        profileBanner.removeAttribute('src');
+      }
       profileName.replaceChildren(...name.cloneNode(true).childNodes);
       const portrait = avatar.cloneNode();
       portrait.loading = 'eager';
