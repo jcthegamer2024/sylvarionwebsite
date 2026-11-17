@@ -216,8 +216,69 @@ nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0;
 .roster li { display: flex; align-items: center; gap: 12px; padding: 11px; border-radius: 6px; background: var(--panel); border: 1px solid var(--line); }
 .roster li > div { min-width: 0; }
 .roster strong { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; overflow-wrap: anywhere; }
-.roster .staff-flag { flex: none; width: 16px; height: 12px; border-radius: 1px; }
-.roster .role { display: block; color: var(--role-color, var(--muted)); font-size: .8rem; font-weight: 600; }
+:is(.roster, .staff-profile) .staff-flag { flex: none; width: 16px; height: 12px; border-radius: 1px; }
+:is(.roster, .staff-profile) .role { display: block; color: var(--role-color, var(--muted)); font-size: .8rem; font-weight: 600; }
+.roster li:has(.profile-trigger) { position: relative; padding-inline-end: 37px; }
+.profile-trigger {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+}
+.profile-trigger::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 16px;
+  width: 7px;
+  height: 7px;
+  border-block-start: 2px solid;
+  border-inline-end: 2px solid;
+  transform: translateY(-50%) rotate(45deg);
+}
+.staff-profile {
+  width: min(440px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 20px 60px #0005;
+  overflow-wrap: anywhere;
+}
+.staff-profile::backdrop { background: #080c16aa; }
+body:has(.staff-profile[open]) { overflow: hidden; }
+.staff-profile-content { position: relative; padding: clamp(18px, 5vw, 28px); }
+.profile-close {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.profile-close:hover { color: var(--accent); border-color: var(--accent); }
+.profile-heading { display: flex; align-items: center; gap: 14px; padding-inline-end: 42px; }
+.profile-heading h2 { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; margin: 0 0 4px; font-size: clamp(1rem, 4vw, 1.4rem); }
+.profile-avatar { flex: 0 0 clamp(72px, 19vw, 96px); }
+.profile-avatar img { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; border: 1px solid var(--line); border-radius: 6px; background: var(--avatar); }
+.profile-details:not(:empty) { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); }
+.profile-details > :last-child { margin-bottom: 0; }
+.profile-links { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+.profile-links a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; color: var(--accent); text-decoration: none; }
+.profile-links svg { flex: none; }
+.profile-links a:hover { border-color: var(--accent); }
 /* Match the original role hues, with text shades chosen for each theme. */
 .role[data-role="admin"] { --role-color: light-dark(#e80000, #ff3b3b); }
 .role[data-role="manager"] { --role-color: light-dark(#9900ff, #bc57ff); }
@@ -294,6 +355,26 @@ nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .staff-profile {
+    opacity: 0;
+    transform: translateY(5px) scale(.98);
+    transition: opacity .14s ease-in, transform .14s ease-in;
+  }
+  .staff-profile[open]:not([data-closing]) {
+    opacity: 1;
+    transform: none;
+    transition-duration: .18s;
+    transition-timing-function: ease-out;
+  }
+  .staff-profile::backdrop {
+    opacity: 0;
+    transition: opacity .14s ease;
+  }
+  .staff-profile[open]:not([data-closing])::backdrop { opacity: 1; }
+  @starting-style {
+    .staff-profile[open]:not([data-closing]) { opacity: 0; transform: translateY(5px) scale(.98); }
+    .staff-profile[open]:not([data-closing])::backdrop { opacity: 0; }
+  }
   .roster li { transition: border-color .16s ease, background-color .16s ease; }
   .header-inner { transition: transform .22s ease, opacity .2s ease, background-color .2s ease; }
   :is(.button, .copy-address, .theme-toggle, .menu-toggle, .header-discord, .socials a, nav a) {

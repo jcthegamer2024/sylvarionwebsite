@@ -106,3 +106,58 @@ if (themeToggle) {
     }
   });
 }
+
+const staffProfile = document.querySelector('.staff-profile');
+
+if (staffProfile?.showModal) {
+  const profileName = staffProfile.querySelector('#staff-profile-name');
+  const profileAvatar = staffProfile.querySelector('.profile-avatar');
+  const profileRole = staffProfile.querySelector('.profile-role');
+  const profileDetails = staffProfile.querySelector('.profile-details');
+
+  document.querySelectorAll('.roster > li > template[data-staff-profile]').forEach((template) => {
+    const card = template.parentElement;
+    const name = card.querySelector('strong');
+    const avatar = card.querySelector('.avatar');
+    const role = card.querySelector('.role');
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'profile-trigger';
+    trigger.setAttribute('aria-label', `View profile for ${name.textContent.trim()}`);
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    card.append(trigger);
+
+    trigger.addEventListener('click', () => {
+      profileName.replaceChildren(...name.cloneNode(true).childNodes);
+      const portrait = avatar.cloneNode();
+      portrait.loading = 'eager';
+      profileAvatar.replaceChildren(portrait);
+      profileRole.replaceChildren(role.cloneNode(true));
+      profileDetails.replaceChildren(template.content.cloneNode(true));
+      trigger.focus({ preventScroll: true });
+      staffProfile.showModal();
+    });
+  });
+
+  async function closeProfile() {
+    if (!staffProfile.open || staffProfile.hasAttribute('data-closing')) return;
+
+    staffProfile.dataset.closing = '';
+    const transitions = staffProfile.getAnimations().map((animation) => animation.finished);
+    await Promise.allSettled(transitions);
+    staffProfile.close();
+    delete staffProfile.dataset.closing;
+  }
+
+  staffProfile.querySelector('form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    closeProfile();
+  });
+  staffProfile.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeProfile();
+  });
+  staffProfile.addEventListener('click', (event) => {
+    if (event.target === staffProfile) closeProfile();
+  });
+}

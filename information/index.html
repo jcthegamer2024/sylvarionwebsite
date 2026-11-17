@@ -165,6 +165,31 @@
                     loading="lazy" /></strong
                 ><span class="role" data-role="admin">Admin</span>
               </div>
+              <template data-staff-profile>
+                <p>
+                  Hi, i'm JC! I am from the UK, specifically England. I love gaming,
+                  especially Minecraft (Evidently!). I love to be creative and design
+                  new things.
+                </p>
+                <ul class="profile-links" aria-label="Social links">
+                  <li>
+                    <a href="https://github.com/jcthegamer2024">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#github"></use>
+                      </svg>
+                      GitHub
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://modrinth.com/user/jcthegamer2024">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#modrinth"></use>
+                      </svg>
+                      Modrinth
+                    </a>
+                  </li>
+                </ul>
+              </template>
             </li>
             <li>
               <img
@@ -373,6 +398,64 @@
                     loading="lazy" /></strong
                 ><span class="role" data-role="developer">Developer</span>
               </div>
+              <template data-staff-profile>
+                <p>
+                  Hiya, I am K1NG_DUCKY. I am from Wales, and I enjoy creating and
+                  helping out in a variety of projects! My main game is Minecraft
+                  (May be somewhat obvious). I help out with Sylv by creating new
+                  assets and plugins for the server!
+                </p>
+                <ul class="profile-links" aria-label="Social links">
+                  <li>
+                    <a href="https://discord.com/users/1045022710956298260">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#discord"></use>
+                      </svg>
+                      Discord
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://modrinth.com/user/cosmic.creator">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#modrinth"></use>
+                      </svg>
+                      Modrinth
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://youtube.com/@K1NG_DUCKY_MC">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#youtube"></use>
+                      </svg>
+                      YouTube
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://namemc.com/profile/K1NG_DUCKY.1">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#namemc"></use>
+                      </svg>
+                      NameMC
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/CosmicCreator639">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#github"></use>
+                      </svg>
+                      GitHub
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://twitch.tv/duckman_dave">
+                      <svg width="16" height="16" aria-hidden="true">
+                        <use href="/img/social-icons.svg?v=2#twitch"></use>
+                      </svg>
+                      Twitch
+                    </a>
+                  </li>
+                </ul>
+              </template>
             </li>
             <li>
               <img
@@ -574,6 +657,21 @@
         </section>
       </div>
     </main>
+    <dialog class="staff-profile" aria-labelledby="staff-profile-name">
+      <div class="staff-profile-content">
+        <form method="dialog">
+          <button class="profile-close" aria-label="Close profile" autofocus>×</button>
+        </form>
+        <header class="profile-heading">
+          <div class="profile-avatar"></div>
+          <div>
+            <h2 id="staff-profile-name"></h2>
+            <div class="profile-role"></div>
+          </div>
+        </header>
+        <div class="profile-details"></div>
+      </div>
+    </dialog>
     <footer class="site-footer">
       <div class="shell footer-inner">
         <div>
