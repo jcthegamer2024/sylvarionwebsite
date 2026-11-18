@@ -290,6 +290,10 @@ body:has(.staff-profile[open]) { overflow: hidden; }
   object-fit: cover;
   mask-image: linear-gradient(to bottom, #0009, #0005 45%, transparent);
 }
+.profile-banner[src="/img/staff/sealing99-banner.png"] {
+  object-position: center 11%;
+  mask-image: linear-gradient(to bottom, #0009 60%, transparent);
+}
 .profile-heading:has(.profile-banner:not([hidden])) {
   background: var(--panel);
 }
